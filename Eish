@@ -44,3 +44,136 @@ True/False Answers:
 1.8 FALSE
 1.9 TRUE
 1.10 FALSE
+
+
+package productinventorymanager;
+
+import java.util.Scanner;
+
+public class ProductInventoryManager {
+    
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+
+        String[] productNames = {"Sugar", "Laptop", "Book", "Dress", "Sphahlo", "Panado"};
+        String[] productCategories = {"Food", "Electronics", "Stationery", "Clothing", "Food", "Health"};
+        double[] productPrices = new double[productNames.length];
+        int[] productQuantities = new int[productNames.length];
+
+        while (true) {
+            System.out.println("\n===PRODUCT INVENTORY MANAGER ===");
+            System.out.println("1. Add Product");
+            System.out.println("2. View All Products");
+            System.out.println("3. Search Product by Name");
+            System.out.println("4. Sort Products by Name");
+            System.out.println("5. Update Stock Quantity");
+            System.out.println("6. Exit");
+            System.out.print("Choose an option: ");
+            int option = input.nextInt();
+
+            switch (option) {
+                case 1:
+                    addProduct(productNames, productPrices, productQuantities);
+                    break;
+                case 2:
+                    viewProducts(productNames, productCategories, productPrices, productQuantities);
+                    break;
+                case 3:
+                    int index = searchProduct(productNames);
+                    if (index != -1) {
+                        System.out.println("Product Found: " + productNames[index] + " - R" + productPrices[index]);
+                    } else {
+                        System.out.println("Product not found.");
+                    }
+                    break;
+                case 4:
+                    sortProducts(productNames, productCategories, productPrices, productQuantities);
+                    System.out.println("Products sorted successfully.");
+                    break;
+                case 5:
+                    updateStockQuantity(productNames, productQuantities);
+                    break;
+                case 6:
+                    System.out.println("Exiting Application... Goodbye!");
+                    return;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    public static void addProduct(String[] names, double[] prices, int[] quantities) {
+        Scanner input = new Scanner(System.in);
+        for (int i = 0; i < names.length; i++) {
+            System.out.print("Enter price for " + names[i] + ": R");
+            prices[i] = input.nextDouble();
+            System.out.print("Enter quantity for " + names[i] + ": ");
+            quantities[i] = input.nextInt();
+        }
+    }
+
+    public static void viewProducts(String[] names, String[] categories, double[] prices, int[] quantities) {
+        System.out.println("\nPRODUCT LIST:");
+        System.out.println("Name\tCategory\t\tPrice\tQuantity");
+        for (int i = 0; i < names.length; i++) {
+            System.out.println(
+                names[i] + "\t" + categories[i] + "\t\tR" + prices[i] + "\t" + quantities[i]
+            );
+        }
+    }
+
+    public static int searchProduct(String[] names) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter product name to search: ");
+        String searchName = input.nextLine();
+        for (int i = 0; i < names.length; i++) {
+            if (names[i].equalsIgnoreCase(searchName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public static void updateStockQuantity(String[] names, int[] quantities) {
+        Scanner input = new Scanner(System.in);
+        System.out.print("Enter product name to update quantity: ");
+        String name = input.nextLine();
+        for (int i = 0; i < names.length; i++) {
+            if (names[i].equalsIgnoreCase(name)) {
+                System.out.print("Enter new quantity: ");
+                quantities[i] = input.nextInt();
+                System.out.println("Quantity updated successfully.");
+                return;
+            }
+        }
+        System.out.println("Error: Product not found.");
+    }
+
+    public static void sortProducts(String[] names, String[] categories, double[] prices, int[] quantities) {
+        for (int i = 0; i < names.length - 1; i++) {
+            for (int j = 0; j < names.length - 1 - i; j++) {
+                if (names[j].compareToIgnoreCase(names[j + 1]) > 0) {
+                    // Swap names
+                    String tempName = names[j];
+                    names[j] = names[j + 1];
+                    names[j + 1] = tempName;
+
+                    // Swap categories
+                    String tempCat = categories[j];
+                    categories[j] = categories[j + 1];
+                    categories[j + 1] = tempCat;
+
+                    // Swap prices
+                    double tempPrice = prices[j];
+                    prices[j] = prices[j + 1];
+                    prices[j + 1] = tempPrice;
+
+                    // Swap quantities
+                    int tempQty = quantities[j];
+                    quantities[j] = quantities[j + 1];
+                    quantities[j + 1] = tempQty;
+                }
+            }
+        }
+    }
+}
