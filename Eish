@@ -1,179 +1,91 @@
- for (int i = 0; i < words.length - 1; i++) {
-            for (int j = 0; j < words.length - 1 - i; j++) {
-                if (words[j].compareTo(words[j + 1]) > 0) {
-                    // Swap
-                    String temp = words[j];
-                    words[j] = words[j + 1];
-                    words[j + 1] = temp;
-                }
-            }
-        }
+Question 1 =========
+
+SELECT 
+  SUBSTR(firstname, 1, 1) || '. ' || surname || ' lives in the state of ' ||
+  CASE 
+    WHEN state = 'FL' THEN 'Florida'
+    WHEN state = 'CA' THEN 'California'
+    ELSE 'Unknown'
+  END AS "Referred customers"
+FROM customers
+WHERE referredby IS NOT NULL
+ORDER BY surname;
+
+Question 2 =========
+
+SELECT 
+  UPPER(c.firstname || ' ' || c.surname) || ' has referred ' || 
+  COUNT(r.customerid) || ' customers to the book club' AS "Referee Statistics"
+FROM customers c
+JOIN customers r ON c.customerid = r.referredby
+GROUP BY c.firstname, c.surname;
 
 
-Multiple Choice Answers:
+Question 3 =========
 
-B
-
-C
-
-C
-
-D
-
-B
-
-A
-
-C
-
-C
-
-B
-
-C
-
-True/False Answers:
-
-1.1 TRUE
-1.2 TRUE
-1.3 TRUE
-1.4 FALSE
-1.5 FALSE
-1.6 FALSE
-1.7 FALSE
-1.8 FALSE
-1.9 TRUE
-1.10 FALSE
+SELECT 
+  COUNT(*) AS "Number of Books",
+  UPPER(author) AS "Author",
+  'R' || TO_CHAR(SUM(price), '9990.99') AS "Total Book Cost"
+FROM books
+WHERE UPPER(author) = 'LISA WHITE'
+GROUP BY author;
 
 
-package productinventorymanager;
+Question 4 ===========
+4.1)
+CREATE TABLE TB_CUSTOMER (
+  customer_id NUMBER(7) PRIMARY KEY,
+  name VARCHAR2(50) NOT NULL,
+  phone VARCHAR2(25) UNIQUE,
+  address VARCHAR2(400),
+  credit_rating VARCHAR2(9)
+);
 
-import java.util.Scanner;
+CREATE TABLE TB_ORD (
+  id NUMBER(7) PRIMARY KEY,
+  customer_id NUMBER(7),
+  date_ordered DATE,
+  total NUMBER(11, 2)
+);
 
-public class ProductInventoryManager {
-    
-    public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
+4.2)
+SELECT table_name FROM user_tables WHERE table_name IN ('TB_CUSTOMER', 'TB_ORD');
 
-        String[] productNames = {"Sugar", "Laptop", "Book", "Dress", "Sphahlo", "Panado"};
-        String[] productCategories = {"Food", "Electronics", "Stationery", "Clothing", "Food", "Health"};
-        double[] productPrices = new double[productNames.length];
-        int[] productQuantities = new int[productNames.length];
+4.3) 
+ALTER TABLE TB_CUSTOMER MODIFY credit_rating VARCHAR2(10);
 
-        while (true) {
-            System.out.println("\n===PRODUCT INVENTORY MANAGER ===");
-            System.out.println("1. Add Product");
-            System.out.println("2. View All Products");
-            System.out.println("3. Search Product by Name");
-            System.out.println("4. Sort Products by Name");
-            System.out.println("5. Update Stock Quantity");
-            System.out.println("6. Exit");
-            System.out.print("Choose an option: ");
-            int option = input.nextInt();
+4.4)
+CREATE SEQUENCE TB_CUSTOMER_seq 
+START WITH 2165001 
+INCREMENT BY 1 
+MAXVALUE 99999;
 
-            switch (option) {
-                case 1:
-                    addProduct(productNames, productPrices, productQuantities);
-                    break;
-                case 2:
-                    viewProducts(productNames, productCategories, productPrices, productQuantities);
-                    break;
-                case 3:
-                    int index = searchProduct(productNames);
-                    if (index != -1) {
-                        System.out.println("Product Found: " + productNames[index] + " - R" + productPrices[index]);
-                    } else {
-                        System.out.println("Product not found.");
-                    }
-                    break;
-                case 4:
-                    sortProducts(productNames, productCategories, productPrices, productQuantities);
-                    System.out.println("Products sorted successfully.");
-                    break;
-                case 5:
-                    updateStockQuantity(productNames, productQuantities);
-                    break;
-                case 6:
-                    System.out.println("Exiting Application... Goodbye!");
-                    return;
-                default:
-                    System.out.println("Invalid option. Please try again.");
-            }
-        }
-    }
+4.5)
+INSERT INTO TB_CUSTOMER (customer_id, name, phone, address, credit_rating)
+VALUES (TB_CUSTOMER_seq.NEXTVAL, 'Mike', '082 654 7842', '1547 Aubrey Road Witbank', 'Poor');
 
-    public static void addProduct(String[] names, double[] prices, int[] quantities) {
-        Scanner input = new Scanner(System.in);
-        for (int i = 0; i < names.length; i++) {
-            System.out.print("Enter price for " + names[i] + ": R");
-            prices[i] = input.nextDouble();
-            System.out.print("Enter quantity for " + names[i] + ": ");
-            quantities[i] = input.nextInt();
-        }
-    }
+INSERT INTO TB_CUSTOMER (customer_id, name, phone, address, credit_rating)
+VALUES (TB_CUSTOMER_seq.NEXTVAL, 'Thomas', '082 654 7844', '1955 Valley Street Polokwane', 'Good');
 
-    public static void viewProducts(String[] names, String[] categories, double[] prices, int[] quantities) {
-        System.out.println("\nPRODUCT LIST:");
-        System.out.println("Name\tCategory\t\tPrice\tQuantity");
-        for (int i = 0; i < names.length; i++) {
-            System.out.println(
-                names[i] + "\t" + categories[i] + "\t\tR" + prices[i] + "\t" + quantities[i]
-            );
-        }
-    }
+4.6)
+ALTER TABLE TB_ORD 
+ADD CONSTRAINT fk_customer 
+FOREIGN KEY (customer_id) 
+REFERENCES TB_CUSTOMER(customer_id);
 
-    public static int searchProduct(String[] names) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Enter product name to search: ");
-        String searchName = input.nextLine();
-        for (int i = 0; i < names.length; i++) {
-            if (names[i].equalsIgnoreCase(searchName)) {
-                return i;
-            }
-        }
-        return -1;
-    }
+4.7)
+INSERT INTO TB_ORD (id, customer_id, date_ordered, total) 
+VALUES (&id, &customer_id, &date_ordered, &total);
 
-    public static void updateStockQuantity(String[] names, int[] quantities) {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Enter product name to update quantity: ");
-        String name = input.nextLine();
-        for (int i = 0; i < names.length; i++) {
-            if (names[i].equalsIgnoreCase(name)) {
-                System.out.print("Enter new quantity: ");
-                quantities[i] = input.nextInt();
-                System.out.println("Quantity updated successfully.");
-                return;
-            }
-        }
-        System.out.println("Error: Product not found.");
-    }
+4.8)
+DELETE FROM TB_ORD;
+DELETE FROM TB_CUSTOMER;
 
-    public static void sortProducts(String[] names, String[] categories, double[] prices, int[] quantities) {
-        for (int i = 0; i < names.length - 1; i++) {
-            for (int j = 0; j < names.length - 1 - i; j++) {
-                if (names[j].compareToIgnoreCase(names[j + 1]) > 0) {
-                    // Swap names
-                    String tempName = names[j];
-                    names[j] = names[j + 1];
-                    names[j + 1] = tempName;
+4.9)
+DROP TABLE TB_ORD;
+DROP TABLE TB_CUSTOMER;
 
-                    // Swap categories
-                    String tempCat = categories[j];
-                    categories[j] = categories[j + 1];
-                    categories[j + 1] = tempCat;
+4.10)
+DROP SEQUENCE TB_CUSTOMER_seq;
 
-                    // Swap prices
-                    double tempPrice = prices[j];
-                    prices[j] = prices[j + 1];
-                    prices[j + 1] = tempPrice;
-
-                    // Swap quantities
-                    int tempQty = quantities[j];
-                    quantities[j] = quantities[j + 1];
-                    quantities[j + 1] = tempQty;
-                }
-            }
-        }
-    }
-}
