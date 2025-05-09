@@ -1,91 +1,135 @@
-Question 1 =========
-
-SELECT 
-  SUBSTR(firstname, 1, 1) || '. ' || surname || ' lives in the state of ' ||
-  CASE 
-    WHEN state = 'FL' THEN 'Florida'
-    WHEN state = 'CA' THEN 'California'
-    ELSE 'Unknown'
-  END AS "Referred customers"
-FROM customers
-WHERE referredby IS NOT NULL
-ORDER BY surname;
-
-Question 2 =========
-
-SELECT 
-  UPPER(c.firstname || ' ' || c.surname) || ' has referred ' || 
-  COUNT(r.customerid) || ' customers to the book club' AS "Referee Statistics"
-FROM customers c
-JOIN customers r ON c.customerid = r.referredby
-GROUP BY c.firstname, c.surname;
-
-
-Question 3 =========
-
-SELECT 
-  COUNT(*) AS "Number of Books",
-  UPPER(author) AS "Author",
-  'R' || TO_CHAR(SUM(price), '9990.99') AS "Total Book Cost"
-FROM books
-WHERE UPPER(author) = 'LISA WHITE'
-GROUP BY author;
+A. new int[genres.length]
+B. display(genres, rentals)
+C. determineHighestRentalGenre(rentals)
+D. highestRentalIndex
+E. highestRentalIndex
+F. sortByRentals(genres, rentals)
+H. display(genres, rentals)
+I. resetRentals(rentals)
+J. findGenreIndex(genres, genre)
+K. rentals[index] + rentalCount
+L. genres.length
+M. genres[i].equalsIgnoreCase(genre)
+N. rentals[i] > max
+O. rentals[i]
+P. i
+Q. rentals[j]
+R. rentals[j]
+S. rentals[j]
+T. genres[i]
+U. rentals[i]
+V. 0
 
 
-Question 4 ===========
-4.1)
-CREATE TABLE TB_CUSTOMER (
-  customer_id NUMBER(7) PRIMARY KEY,
-  name VARCHAR2(50) NOT NULL,
-  phone VARCHAR2(25) UNIQUE,
-  address VARCHAR2(400),
-  credit_rating VARCHAR2(9)
-);
 
-CREATE TABLE TB_ORD (
-  id NUMBER(7) PRIMARY KEY,
-  customer_id NUMBER(7),
-  date_ordered DATE,
-  total NUMBER(11, 2)
-);
 
-4.2)
-SELECT table_name FROM user_tables WHERE table_name IN ('TB_CUSTOMER', 'TB_ORD');
 
-4.3) 
-ALTER TABLE TB_CUSTOMER MODIFY credit_rating VARCHAR2(10);
 
-4.4)
-CREATE SEQUENCE TB_CUSTOMER_seq 
-START WITH 2165001 
-INCREMENT BY 1 
-MAXVALUE 99999;
 
-4.5)
-INSERT INTO TB_CUSTOMER (customer_id, name, phone, address, credit_rating)
-VALUES (TB_CUSTOMER_seq.NEXTVAL, 'Mike', '082 654 7842', '1547 Aubrey Road Witbank', 'Poor');
 
-INSERT INTO TB_CUSTOMER (customer_id, name, phone, address, credit_rating)
-VALUES (TB_CUSTOMER_seq.NEXTVAL, 'Thomas', '082 654 7844', '1955 Valley Street Polokwane', 'Good');
+import java.util.Scanner;
 
-4.6)
-ALTER TABLE TB_ORD 
-ADD CONSTRAINT fk_customer 
-FOREIGN KEY (customer_id) 
-REFERENCES TB_CUSTOMER(customer_id);
+public class MovieRentalManager {
 
-4.7)
-INSERT INTO TB_ORD (id, customer_id, date_ordered, total) 
-VALUES (&id, &customer_id, &date_ordered, &total);
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-4.8)
-DELETE FROM TB_ORD;
-DELETE FROM TB_CUSTOMER;
+        // Declare parallel arrays
+        String[] genres = {"Action", "Comedy", "Drama", "Horror", "Sci-Fi"};
+        int[] rentals = new int[genres.length]; // Rental counts for each genre
 
-4.9)
-DROP TABLE TB_ORD;
-DROP TABLE TB_CUSTOMER;
+        // Example: Adding some rentals
+        addRentals(genres, rentals, "Action", 50);
+        addRentals(genres, rentals, "Comedy", 30);
+        addRentals(genres, rentals, "Drama", 40);
 
-4.10)
-DROP SEQUENCE TB_CUSTOMER_seq;
+        // Display the list before sorting
+        System.out.println("Genres and Rentals Before Sorting:");
+        display(genres, rentals);
 
+        // Find and display the genre with highest rentals
+        int highestRentalIndex = determineHighestRentalGenre(rentals);
+        System.out.println("\nGenre with the highest rentals: " + genres[highestRentalIndex] + " with " + rentals[highestRentalIndex] + " rentals.");
+
+        // Sort the genres based on rental counts
+        sortByRentals(genres, rentals);
+
+        // Display the list after sorting
+        System.out.println("\nGenres and Rentals After Sorting:");
+        display(genres, rentals);
+
+        // Reset rentals
+        resetRentals(rentals);
+        System.out.println("\nRentals have been reset.");
+        display(genres, rentals);
+    }
+
+    // Method to add rentals to a specified genre
+    public static void addRentals(String[] genres, int[] rentals, String genre, int rentalCount) {
+        int index = findGenreIndex(genres, genre);
+        if (index != -1) {
+            rentals[index] = rentals[index] + rentalCount; // Add rentals to the genre
+            System.out.println(rentalCount + " rentals added to " + genre + " genre.");
+        } else {
+            System.out.println("Genre " + genre + " not found.");
+        }
+    }
+
+    // Method to find the index of a genre in the genres array
+    public static int findGenreIndex(String[] genres, String genre) {
+        for (int i = 0; i < genres.length; i++) {
+            if (genres[i].equalsIgnoreCase(genre)) {
+                return i;
+            }
+        }
+        return -1; // Return -1 if genre not found
+    }
+
+    // Method to determine the genre with the highest rentals
+    public static int determineHighestRentalGenre(int[] rentals) {
+        int max = rentals[0];
+        int index = 0;
+        for (int i = 1; i < rentals.length; i++) {
+            if (rentals[i] > max) {
+                max = rentals[i];
+                index = i;
+            }
+        }
+        return index;
+    }
+
+    // Method to sort genres and rentals based on rental counts in descending order
+    public static void sortByRentals(String[] genres, int[] rentals) {
+        for (int i = 0; i < rentals.length - 1; i++) {
+            for (int j = i + 1; j < rentals.length; j++) {
+                if (rentals[i] < rentals[j]) {
+                    // Swap rentals
+                    int tempRentals = rentals[i];
+                    rentals[i] = rentals[j];
+                    rentals[j] = tempRentals;
+
+                    // Swap genres to match rentals
+                    String tempGenre = genres[i];
+                    genres[i] = genres[j];
+                    genres[j] = tempGenre;
+                }
+            }
+        }
+    }
+
+    // Method to display the genres and their corresponding rental counts
+    public static void display(String[] genres, int[] rentals) {
+        System.out.println("GENRE\t\tRENTALS");
+        System.out.println("======\t\t========\n");
+        for (int i = 0; i < genres.length; i++) {
+            System.out.println(genres[i] + "\t\t" + rentals[i]);
+        }
+    }
+
+    // Method to reset all rental counts to 0
+    public static void resetRentals(int[] rentals) {
+        for (int i = 0; i < rentals.length; i++) {
+            rentals[i] = 0; // Reset each rental count to 0
+        }
+    }
+}
