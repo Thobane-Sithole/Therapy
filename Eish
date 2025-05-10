@@ -73,3 +73,137 @@ Related Pattern
 Factory Method: Can be used to instantiate specific payment strategies based on runtime input.
 
 Decorator: Can be combined with Strategy for additional processing features (e.g., logging, auditing).
+
+
+
+***********************************************************************************************************************
+
+Question 2 [32]
+2.1.1 Definition:
+A test case is a set of conditions used to determine if a system or component works as expected.
+
+2.1.2 Example:
+Login with valid username and password should redirect user to dashboard.
+
+2.1.3 When do we write test cases?
+Before or during software testing phase, often after requirement analysis and design.
+
+2.1.4 Why write test cases?
+
+Ensures functionality works as intended
+
+Helps detect bugs early
+
+2.2
+To find errors, a test must cover edge cases, invalid inputs, and boundary conditions.
+Other 3 attributes:
+
+Reusable: Can be executed again for regression
+
+Clear: Easy to understand and execute
+
+Traceable: Linked to requirements
+
+2.3 Black-box vs White-box testing
+
+Feature	Black-box	White-box
+Visibility	No internal code knowledge	Full code knowledge
+Focus	Input/output behavior	Code paths, loops
+Test Basis	Requirements	Code structure
+Tester	End-user or QA	Developer or technical tester
+
+2.4.1 Test Case Table
+
+Test Case ID	Description	Test Steps	Test Data	Expected Result	Actual Result	Status
+TC001	ProCart handles 1000 users	Simulate 1000 users adding items	N/A	Response time <2s, no crash	Met expectations	Pass
+
+2.4.2 Login Test Cases
+
+Test Case ID	Description	Pre-requisite	Test Steps	Expected	Actual	Status
+TC01	Valid login	Logged out	Enter valid creds → click login	Dashboard	Dashboard	Pass
+TC02	Invalid password	Logged out	Enter invalid password	Error message	Error message	Pass
+TC03	Empty fields	Logged out	Submit empty login	Error	Page reloads	Fail
+TC04	Expired session	Session expired	Try action → redirected	Login page	Dashboard	Fail
+
+2.5.1 Test Coverage %
+Formula: (Tested lines / Total lines) × 100
+= (600 / 4000) × 100 = 15%
+
+2.5.2 Code Coverage %
+= (Executed lines / Total lines) × 100
+= (300 / 4000) × 100 = 7.5%
+
+Question 3 [40]
+3.1
+SOA is an architecture where services communicate over a network.
+Key characteristics:
+
+Loose coupling
+
+Interoperability
+
+3.2
+
+Banking: Enables modular mobile banking
+
+Healthcare: Enables system integration (e.g. EHRs)
+
+3.3
+
+Service Provider: Offers service
+
+Service Consumer: Uses the service
+
+Service Registry: Finds available services
+
+3.4
+WSDL describes service functions, formats, and endpoints in SOA.
+
+3.5
+A bank uses SOA to connect fraud detection, transactions, and mobile apps. If a transaction triggers a threshold, fraud service is called to block it.
+
+3.6 Comparison Table
+
+Feature	SOA	Microservices
+Coupling	Loosely coupled	More decoupled
+Deployment	Monolithic or shared	Independent
+Communication	SOAP/HTTP	REST/Message queues
+
+3.7
+Implementation: Wrap legacy systems with services; connect via ESB
+Challenges: Compatibility, security
+Solutions: API gateways, standard data formats, layered architecture
+
+3.8
+ESB centralizes message flow, improves orchestration, ensures logging, security, routing
+
+3.9
+Use SoapUI to test WSDL endpoints and Postman for REST APIs. Monitor logs, response times, and errors for validation.
+
+3.10
+Software Dependability: Trustworthiness
+Attributes: Reliability, Availability, Safety, Maintainability
+
+3.11
+Fault Tolerance: System continues on failure.
+Example: RAID storage mirroring data.
+
+3.12
+
+Assertions: Check code correctness
+
+Exception Handling: Captures and logs errors gracefully
+
+3.13
+Redundancy provides backups or parallel processes to maintain service on failure.
+
+3.14
+
+Validation: Are we building the right product?
+
+Verification: Are we building the product right?
+
+
+
+
+
