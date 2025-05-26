@@ -23,10 +23,10 @@ public class FitnessTracker {
         double[] scores = new double[3];
 
         for (int i = 0; i < 3; i++) {
-            System.out.print("Enter participant name: ");
+            System.out.print("Enter the name of the Participant: ");
             names[i] = scanner.nextLine();
-            System.out.print("Enter participant ID: ");
-            ids[i] = scanner.nextLine();
+            System.out.print("Enter participant id number: ");
+            ids[i] = scanner.next();
             scores[i] = calcScore();
         }
 
@@ -89,10 +89,10 @@ public class FitnessTracker {
 
     public static void display(String[] names, String[] ids, double[] scores, String winnerMessage) {
         System.out.println("\nTOP FITNESS CHALLENGER");
-        System.out.println("=========================================================");
-        System.out.printf("%-20s %-10s %-10s\n", "PARTICIPANT NAME", "ID NO.", "SCORE");
+        System.out.println("==========================");
+        System.out.println("\n"+ "PARTICIPANT NAME"+"ID NO."+ "SCORE");
         for (int i = 0; i < names.length; i++) {
-            System.out.printf("%-20s %-10s %-10.1f\n", names[i], ids[i], scores[i]);
+            System.out.println("\n"+ names[i]+ ids[i]+ scores[i]);
         }
         System.out.println("\n" + winnerMessage);
     }
