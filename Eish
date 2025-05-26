@@ -1,209 +1,251 @@
 Question 1
-*************************************************************
-
-Design Pattern Template – Strategy Pattern
-Pattern Name
-Strategy Pattern
-
-Problem
-In a payment processing system, there is a need to support multiple payment methods such as Credit Card, PayPal, and EFT. Hardcoding each payment option into the system leads to tight coupling and makes it difficult to extend or modify. There must be a way to allow easy integration of new payment methods without altering the core processing logic.
-
-Motivation
-The goal is to support different payment methods dynamically and allow developers to add new ones without changing existing logic. This promotes open/closed principle (open to extension, closed to modification), enhancing flexibility and maintainability.
-
-Context
-The application allows customers to choose a payment method during checkout. Each method requires different processing logic. New methods (e.g., cryptocurrency) may be introduced in the future. The same processing framework should support all methods without major changes.
-
-Forces
-
-Flexibility: Payment methods may change or grow over time.
-
-Maintainability: Avoid modifying existing logic when adding new payment types.
-
-Decoupling: Core payment process should not depend on specific implementations.
-
-Consistency: All payment types should conform to a common interface.
-
-Solution
-Define a family of payment behaviors (strategies), encapsulate each one, and make them interchangeable. The client selects the desired strategy at runtime based on user choice. Each payment method implements a common interface.
-
-Intent
-Define a set of interchangeable algorithms or behaviors and encapsulate them, so they can be used independently without modifying the client code.
-
-Collaborations
-
-The Payment Context delegates payment execution to the selected Payment Strategy.
-
-Each Payment Strategy (e.g., CreditCardPayment, PayPalPayment) implements the interface.
-
-Developers can add new payment methods by creating new strategy classes.
-
-Consequences
-Benefits:
-
-Easy to add new payment methods
-
-Avoids large conditionals (e.g., if-else or switch statements)
-
-Promotes separation of concerns
-
-Complies with SOLID principles (especially Open/Closed Principle)
-
-Drawbacks:
-
-More classes to manage
-
-Requires careful coordination when integrating new strategies
-
-Implementation
-Encapsulate each payment method in its own class that follows a shared interface. The main payment handler interacts only with the interface, not the specific payment method.
-
-Known Uses
-
-Payment systems in e-commerce platforms
-
-Sorting algorithms in libraries
-
-Input validation strategies
-
-Game AI with different enemy behaviors
-
-Related Pattern
-
-Factory Method: Can be used to instantiate specific payment strategies based on runtime input.
-
-Decorator: Can be combined with Strategy for additional processing features (e.g., logging, auditing).
-
-
-
-***********************************************************************************************************************
-
-Question 2 [32]
-2.1.1 Definition:
-A test case is a set of conditions used to determine if a system or component works as expected.
-
-2.1.2 Example:
-Login with valid username and password should redirect user to dashboard.
-
-2.1.3 When do we write test cases?
-Before or during software testing phase, often after requirement analysis and design.
-
-2.1.4 Why write test cases?
-
-Ensures functionality works as intended
-
-Helps detect bugs early
-
-2.2
-To find errors, a test must cover edge cases, invalid inputs, and boundary conditions.
-Other 3 attributes:
-
-Reusable: Can be executed again for regression
-
-Clear: Easy to understand and execute
-
-Traceable: Linked to requirements
-
-2.3 Black-box vs White-box testing
-
-Feature	Black-box	White-box
-Visibility	No internal code knowledge	Full code knowledge
-Focus	Input/output behavior	Code paths, loops
-Test Basis	Requirements	Code structure
-Tester	End-user or QA	Developer or technical tester
-
-2.4.1 Test Case Table
-
-Test Case ID	Description	Test Steps	Test Data	Expected Result	Actual Result	Status
-TC001	ProCart handles 1000 users	Simulate 1000 users adding items	N/A	Response time <2s, no crash	Met expectations	Pass
-
-2.4.2 Login Test Cases
-
-Test Case ID	Description	Pre-requisite	Test Steps	Expected	Actual	Status
-TC01	Valid login	Logged out	Enter valid creds → click login	Dashboard	Dashboard	Pass
-TC02	Invalid password	Logged out	Enter invalid password	Error message	Error message	Pass
-TC03	Empty fields	Logged out	Submit empty login	Error	Page reloads	Fail
-TC04	Expired session	Session expired	Try action → redirected	Login page	Dashboard	Fail
-
-2.5.1 Test Coverage %
-Formula: (Tested lines / Total lines) × 100
-= (600 / 4000) × 100 = 15%
-
-2.5.2 Code Coverage %
-= (Executed lines / Total lines) × 100
-= (300 / 4000) × 100 = 7.5%
-
-Question 3 [40]
-3.1
-SOA is an architecture where services communicate over a network.
-Key characteristics:
-
-Loose coupling
-
-Interoperability
-
-3.2
-
-Banking: Enables modular mobile banking
-
-Healthcare: Enables system integration (e.g. EHRs)
-
-3.3
-
-Service Provider: Offers service
-
-Service Consumer: Uses the service
-
-Service Registry: Finds available services
-
-3.4
-WSDL describes service functions, formats, and endpoints in SOA.
-
-3.5
-A bank uses SOA to connect fraud detection, transactions, and mobile apps. If a transaction triggers a threshold, fraud service is called to block it.
-
-3.6 Comparison Table
-
-Feature	SOA	Microservices
-Coupling	Loosely coupled	More decoupled
-Deployment	Monolithic or shared	Independent
-Communication	SOAP/HTTP	REST/Message queues
-
-3.7
-Implementation: Wrap legacy systems with services; connect via ESB
-Challenges: Compatibility, security
-Solutions: API gateways, standard data formats, layered architecture
-
-3.8
-ESB centralizes message flow, improves orchestration, ensures logging, security, routing
-
-3.9
-Use SoapUI to test WSDL endpoints and Postman for REST APIs. Monitor logs, response times, and errors for validation.
-
-3.10
-Software Dependability: Trustworthiness
-Attributes: Reliability, Availability, Safety, Maintainability
-
-3.11
-Fault Tolerance: System continues on failure.
-Example: RAID storage mirroring data.
-
-3.12
-
-Assertions: Check code correctness
-
-Exception Handling: Captures and logs errors gracefully
-
-3.13
-Redundancy provides backups or parallel processes to maintain service on failure.
-
-3.14
-
-Validation: Are we building the right product?
-
-Verification: Are we building the product right?
-
-
-
-
-
+1. D  
+2. B  
+3. C  
+4. B  
+5. A  
+6. A  
+7. B  
+8. C  
+9. A  
+10. C  
+
+
+Question 2 
+
+import java.util.Scanner;
+
+public class FitnessTracker {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        String[] names = new String[3];
+        String[] ids = new String[3];
+        double[] scores = new double[3];
+
+        for (int i = 0; i < 3; i++) {
+            System.out.print("Enter participant name: ");
+            names[i] = scanner.nextLine();
+            System.out.print("Enter participant ID: ");
+            ids[i] = scanner.nextLine();
+            scores[i] = calcScore();
+        }
+
+        int winnerIndex = determineWinner(scores);
+        String winnerMessage = "Top Fitness Challenger " + names[winnerIndex] + " of participant ID " + ids[winnerIndex] + " with score of " + scores[winnerIndex];
+        sortParticipants(names, ids, scores);
+        display(names, ids, scores, winnerMessage);
+    }
+
+    public static double calcScore() {
+        Scanner scanner = new Scanner(System.in);
+        double[] trainerAverages = new double[4];
+        String[] categories = {"Stamina", "Strength", "Consistency"};
+
+        for (int i = 0; i < 4; i++) {
+            double sum = 0;
+            for (String category : categories) {
+                System.out.print("Enter trainer " + (i + 1) + " score on " + category + ": ");
+                sum += scanner.nextDouble();
+            }
+            trainerAverages[i] = sum / categories.length;
+        }
+
+        double finalScore = 0;
+        for (double avg : trainerAverages) {
+            finalScore += avg;
+        }
+        return finalScore / trainerAverages.length;
+    }
+
+    public static int determineWinner(double[] scores) {
+        int maxIndex = 0;
+        for (int i = 1; i < scores.length; i++) {
+            if (scores[i] > scores[maxIndex]) {
+                maxIndex = i;
+            }
+        }
+        return maxIndex;
+    }
+
+    public static void sortParticipants(String[] names, String[] ids, double[] scores) {
+        for (int i = 0; i < scores.length - 1; i++) {
+            for (int j = 0; j < scores.length - i - 1; j++) {
+                if (scores[j] < scores[j + 1]) {
+                    double tempScore = scores[j];
+                    scores[j] = scores[j + 1];
+                    scores[j + 1] = tempScore;
+
+                    String tempName = names[j];
+                    names[j] = names[j + 1];
+                    names[j + 1] = tempName;
+
+                    String tempId = ids[j];
+                    ids[j] = ids[j + 1];
+                    ids[j + 1] = tempId;
+                }
+            }
+        }
+    }
+
+    public static void display(String[] names, String[] ids, double[] scores, String winnerMessage) {
+        System.out.println("\nTOP FITNESS CHALLENGER");
+        System.out.println("=========================================================");
+        System.out.printf("%-20s %-10s %-10s\n", "PARTICIPANT NAME", "ID NO.", "SCORE");
+        for (int i = 0; i < names.length; i++) {
+            System.out.printf("%-20s %-10s %-10.1f\n", names[i], ids[i], scores[i]);
+        }
+        System.out.println("\n" + winnerMessage);
+    }
+}
+
+Question 3
+
+import java.util.Scanner;
+
+public class SkontiriFileName {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter your full name: ");
+        String fullName = scanner.nextLine().trim();
+        System.out.print("Enter document type (e.g. cv, transcript): ");
+        String docType = scanner.nextLine().trim().toLowerCase();
+
+        String[] nameParts = fullName.split(" ");
+        String surname = nameParts[nameParts.length - 1].toLowerCase();
+        String firstInitial = (nameParts.length > 1) ? String.valueOf(nameParts[0].charAt(0)).toLowerCase() : "";
+        String fileName = (nameParts.length > 1) ? 
+            surname + "_" + firstInitial + "_" + docType + ".pdf" : 
+            surname + "_" + docType + ".pdf";
+
+        System.out.println("Formatted File Name: " + fileName);
+    }
+}
+
+Question 4  
+
+import java.text.DecimalFormat;
+
+public class WaterUsage {
+    private double litersConsumed;
+    private String customerType;
+    private double hoursUsed;
+    private DecimalFormat df = new DecimalFormat("##.00");
+
+    public WaterUsage() {
+        this.litersConsumed = 0;
+        this.customerType = "Regular";
+        this.hoursUsed = 0;
+    }
+
+    public void setLitersConsumed(double litersConsumed) {
+        this.litersConsumed = litersConsumed;
+    }
+
+    public void setCustomerType(String customerType) {
+        this.customerType = customerType;
+    }
+
+    public void setHoursUsed(double hoursUsed) {
+        this.hoursUsed = hoursUsed;
+    }
+
+    public double getLitersConsumed() {
+        return litersConsumed;
+    }
+
+    public String getCustomerType() {
+        return customerType;
+    }
+
+    public double getHoursUsed() {
+        return hoursUsed;
+    }
+
+    public double calculateEfficiency() {
+        return litersConsumed / hoursUsed;
+    }
+
+    public double calculateCost() {
+        double cost = 0.0;
+        switch (customerType.toLowerCase()) {
+            case "regular":
+                cost = litersConsumed * 0.50;
+                break;
+            case "commercial":
+                cost = litersConsumed * 0.70;
+                break;
+            case "industrial":
+                cost = litersConsumed * 0.90;
+                break;
+            default:
+                System.out.println("Invalid customer type. Defaulting to Regular.");
+                cost = litersConsumed * 0.50;
+        }
+        return cost;
+    }
+
+    public void displayDetails(double cost) {
+        System.out.println("\nWater Usage Summary:\n");
+        System.out.println("Water Consumed: " + df.format(litersConsumed) + " liters");
+        System.out.println("Hours Used: " + hoursUsed + " hours");
+        System.out.println("Usage Efficiency: " + df.format(calculateEfficiency()) + " liters/hour");
+        System.out.println("Total Cost: R" + df.format(cost));
+    }
+}
+
+
+import java.util.Scanner;
+
+public class WaterBillingSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        WaterUsage usage = new WaterUsage();
+
+        System.out.print("Enter Water Consumed (in liters): ");
+        usage.setLitersConsumed(scanner.nextDouble());
+        scanner.nextLine(); // Consume newline
+        System.out.print("Enter Customer Type (Regular/Commercial/Industrial): ");
+        usage.setCustomerType(scanner.nextLine());
+        System.out.print("Enter Hours Used: ");
+        usage.setHoursUsed(scanner.nextDouble());
+
+        double cost = usage.calculateCost();
+        usage.displayDetails(cost);
+    }
+}
+
+
+
+
+
+
+
+/*Question 4 Letter Answers*/
+
+A. import java.text.DecimalFormat;
+B. private
+C. this.customerType = "residential";
+D. this.litersConsumed
+E. double
+F. return customerType;
+G. return litersConsumed / hoursUsed;
+H. litersConsumed * 0.50
+I. litersConsumed * 0.70
+J. litersConsumed * 0.90
+K. litersConsumed * 0.50
+L. 
+public void displayDetails(double cost) {
+        System.out.println("\nWater Usage Summary:\n");
+        System.out.println("Water Consumed: " + df.format(litersConsumed) + " liters");
+        System.out.println("Hours Used: " + hoursUsed + " hours");
+        System.out.println("Usage Efficiency: " + df.format(calculateEfficiency()) + " liters/hour");
+        System.out.println("Total Cost: R" + df.format(cost));
+    }
+
+=============WaterBillingSystem.java – Answers for missing parts==========
+M. WaterUsage usage = new WaterUsage();
+N. usage.setLitersConsumed(waterConsumed);
+O. usage.setCustomerType(customerType);
+P. usage.setHoursUsed(hoursUsed);
+Q. usage.calculateCost();
+R. usage.displayDetails(cost);
