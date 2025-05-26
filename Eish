@@ -18,13 +18,14 @@ import java.util.Scanner;
 public class FitnessTracker {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        Scanner nameScanner = new Scanner(System.in);
         String[] names = new String[3];
         String[] ids = new String[3];
         double[] scores = new double[3];
 
         for (int i = 0; i < 3; i++) {
             System.out.print("Enter the name of the Participant: ");
-            names[i] = scanner.nextLine();
+            names[i] = nameScanner.nextLine();
             System.out.print("Enter participant id number: ");
             ids[i] = scanner.next();
             scores[i] = calcScore();
