@@ -245,7 +245,6 @@ public void displayDetails(double cost) {
         System.out.println("Total Cost: R" + df.format(cost));
     }
 
-=============WaterBillingSystem.java – Answers for missing parts==========
 M. WaterUsage usage = new WaterUsage();
 N. usage.setLitersConsumed(waterConsumed);
 O. usage.setCustomerType(customerType);
