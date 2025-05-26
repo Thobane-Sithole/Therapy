@@ -13,26 +13,27 @@ Question 1
 
 Question 2 
 
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class FitnessTracker {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Scanner nameScanner = new Scanner(System.in);
         String[] names = new String[3];
         String[] ids = new String[3];
+        DecimalFormat df = new DecimalFormat("00.00");
         double[] scores = new double[3];
 
         for (int i = 0; i < 3; i++) {
-            System.out.print("Enter the name of the Participant: ");
-            names[i] = nameScanner.nextLine();
-            System.out.print("Enter participant id number: ");
-            ids[i] = scanner.next();
+            System.out.print("Enter participant name: ");
+            names[i] = scanner.nextLine();
+            System.out.print("Enter participant ID: ");
+            ids[i] = scanner.nextLine();
             scores[i] = calcScore();
         }
 
         int winnerIndex = determineWinner(scores);
-        String winnerMessage = "Top Fitness Challenger " + names[winnerIndex] + " of participant ID " + ids[winnerIndex] + " with score of " + scores[winnerIndex];
+        String winnerMessage = "Top Fitness Challenger " + names[winnerIndex] + " of participant ID " + ids[winnerIndex] + " with score of " + df.format(scores[winnerIndex]);
         sortParticipants(names, ids, scores);
         display(names, ids, scores, winnerMessage);
     }
@@ -89,11 +90,12 @@ public class FitnessTracker {
     }
 
     public static void display(String[] names, String[] ids, double[] scores, String winnerMessage) {
+        DecimalFormat df = new DecimalFormat("00.00");
         System.out.println("\nTOP FITNESS CHALLENGER");
         System.out.println("==========================");
-        System.out.println("\n"+ "PARTICIPANT NAME"+"ID NO."+ "SCORE");
+        System.out.println("PARTICIPANT NAME \t\t ID NO. \t\t SCORE");
         for (int i = 0; i < names.length; i++) {
-            System.out.println("\n"+ names[i]+ ids[i]+ scores[i]);
+            System.out.println(names[i] + "\t\t" + ids[i] + "\t\t" + df.format(scores[i]));
         }
         System.out.println("\n" + winnerMessage);
     }
