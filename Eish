@@ -115,10 +115,14 @@ public class SkontiriFileName {
 
         String[] nameParts = fullName.split(" ");
         String surname = nameParts[nameParts.length - 1].toLowerCase();
-        String firstInitial = (nameParts.length > 1) ? String.valueOf(nameParts[0].charAt(0)).toLowerCase() : "";
-        String fileName = (nameParts.length > 1) ? 
-            surname + "_" + firstInitial + "_" + docType + ".pdf" : 
-            surname + "_" + docType + ".pdf";
+        String fileName;
+
+        if (nameParts.length > 1) {
+            String firstInitial = String.valueOf(nameParts[0].charAt(0)).toLowerCase();
+            fileName = surname + "_" + firstInitial + "_" + docType + ".pdf";
+        } else {
+            fileName = surname + "_" + docType + ".pdf";
+        }
 
         System.out.println("Formatted File Name: " + fileName);
     }
@@ -223,7 +227,7 @@ public class WaterBillingSystem {
 
 
 
-/*Question 4 Letter Answers*/
+Question 4
 
 A. import java.text.DecimalFormat;
 B. private
