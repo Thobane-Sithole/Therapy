@@ -1,257 +1,120 @@
-Question 1
-1. D  
-2. B  
-3. C  
-4. B  
-5. A  
-6. A  
-7. B  
-8. C  
-9. A  
-10. C  
+Question 1	
+Briefly explain the history and development of WebVR.
+I would say that the History of WebVR started when three people collaborated in 2014 which is Vlad and Carpenter who was working at Mozilla as engineers by the time and the third one was Brandon Jones, their goal was to simply add Oculus on Firefox and Chrome to run away from the old plugin-based methods.
+WebVR was an experimental JavaScript API developed by Mozilla and other contributors around 2014 to enable virtual reality experiences directly in the browser. It allowed developers to connect VR hardware (like Oculus Rift and HTC Vive) to web content. Though eventually deprecated in favor of WebXR in 2018, WebVR laid the foundation for immersive web standards by enabling real-time VR rendering without needing standalone apps.
 
+Question 2	
+Describe three key features provided by the WebVR API for building VR applications.
+The three key features that were provided by the WebVR API for building VR applications were:
+The first one would be that they can see if they can check if the function of the query does exist or not.
+ 
+The second one was that the API was able to check the device type for displaying and for head tracking
+ 
+The third one was that the API was connecting devices using functions from the JavaScript like navigator.mozGetVRDevice() for the cross browser support.
 
-Question 2 
+VRDisplay Interface: Provides access to the VR hardware and controls the rendering loop. 
+• Sensor Tracking: Tracks the user’s head orientation and position to adapt the display view. 
+• Frame Submission: Sends properly rendered frames to the VR headset to ensure low latency visuals.
 
-import java.text.DecimalFormat;
-import java.util.Scanner;
-
-public class FitnessTracker {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String[] names = new String[3];
-        String[] ids = new String[3];
-        DecimalFormat df = new DecimalFormat("00.00");
-        double[] scores = new double[3];
-
-        for (int i = 0; i < 3; i++) {
-            System.out.print("Enter participant name: ");
-            names[i] = scanner.nextLine();
-            System.out.print("Enter participant ID: ");
-            ids[i] = scanner.nextLine();
-            scores[i] = calcScore();
-        }
-
-        int winnerIndex = determineWinner(scores);
-        String winnerMessage = "Top Fitness Challenger " + names[winnerIndex] + " of participant ID " + ids[winnerIndex] + " with score of " + df.format(scores[winnerIndex]);
-        sortParticipants(names, ids, scores);
-        display(names, ids, scores, winnerMessage);
-    }
-
-    public static double calcScore() {
-        Scanner scanner = new Scanner(System.in);
-        double[] trainerAverages = new double[4];
-        String[] categories = {"Stamina", "Strength", "Consistency"};
-
-        for (int i = 0; i < 4; i++) {
-            double sum = 0;
-            for (String category : categories) {
-                System.out.print("Enter trainer " + (i + 1) + " score on " + category + ": ");
-                sum += scanner.nextDouble();
-            }
-            trainerAverages[i] = sum / categories.length;
-        }
-
-        double finalScore = 0;
-        for (double avg : trainerAverages) {
-            finalScore += avg;
-        }
-        return finalScore / trainerAverages.length;
-    }
-
-    public static int determineWinner(double[] scores) {
-        int maxIndex = 0;
-        for (int i = 1; i < scores.length; i++) {
-            if (scores[i] > scores[maxIndex]) {
-                maxIndex = i;
-            }
-        }
-        return maxIndex;
-    }
-
-    public static void sortParticipants(String[] names, String[] ids, double[] scores) {
-        for (int i = 0; i < scores.length - 1; i++) {
-            for (int j = 0; j < scores.length - i - 1; j++) {
-                if (scores[j] < scores[j + 1]) {
-                    double tempScore = scores[j];
-                    scores[j] = scores[j + 1];
-                    scores[j + 1] = tempScore;
-
-                    String tempName = names[j];
-                    names[j] = names[j + 1];
-                    names[j + 1] = tempName;
-
-                    String tempId = ids[j];
-                    ids[j] = ids[j + 1];
-                    ids[j + 1] = tempId;
-                }
-            }
-        }
-    }
-
-    public static void display(String[] names, String[] ids, double[] scores, String winnerMessage) {
-        DecimalFormat df = new DecimalFormat("00.00");
-        System.out.println("\nTOP FITNESS CHALLENGER");
-        System.out.println("==========================");
-        System.out.println("PARTICIPANT NAME \t\t ID NO. \t\t SCORE");
-        for (int i = 0; i < names.length; i++) {
-            System.out.println(names[i] + "\t\t" + ids[i] + "\t\t" + df.format(scores[i]));
-        }
-        System.out.println("\n" + winnerMessage);
-    }
-}
-
-Question 3
-
-import java.util.Scanner;
-
-public class SkontiriFileName {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("Enter your full name: ");
-        String fullName = scanner.nextLine().trim();
-        System.out.print("Enter document type (e.g. cv, transcript): ");
-        String docType = scanner.nextLine().trim().toLowerCase();
-
-        String[] nameParts = fullName.split(" ");
-        String surname = nameParts[nameParts.length - 1].toLowerCase();
-        String fileName;
-
-        if (nameParts.length > 1) {
-            String firstInitial = String.valueOf(nameParts[0].charAt(0)).toLowerCase();
-            fileName = surname + "_" + firstInitial + "_" + docType + ".pdf";
-        } else {
-            fileName = surname + "_" + docType + ".pdf";
-        }
-
-        System.out.println("Formatted File Name: " + fileName);
-    }
-}
-
-Question 4  
-
-import java.text.DecimalFormat;
-
-public class WaterUsage {
-    private double litersConsumed;
-    private String customerType;
-    private double hoursUsed;
-    private DecimalFormat df = new DecimalFormat("##.00");
-
-    public WaterUsage() {
-        this.litersConsumed = 0;
-        this.customerType = "Regular";
-        this.hoursUsed = 0;
-    }
-
-    public void setLitersConsumed(double litersConsumed) {
-        this.litersConsumed = litersConsumed;
-    }
-
-    public void setCustomerType(String customerType) {
-        this.customerType = customerType;
-    }
-
-    public void setHoursUsed(double hoursUsed) {
-        this.hoursUsed = hoursUsed;
-    }
-
-    public double getLitersConsumed() {
-        return litersConsumed;
-    }
-
-    public String getCustomerType() {
-        return customerType;
-    }
-
-    public double getHoursUsed() {
-        return hoursUsed;
-    }
-
-    public double calculateEfficiency() {
-        return litersConsumed / hoursUsed;
-    }
-
-    public double calculateCost() {
-        double cost = 0.0;
-        switch (customerType.toLowerCase()) {
-            case "regular":
-                cost = litersConsumed * 0.50;
-                break;
-            case "commercial":
-                cost = litersConsumed * 0.70;
-                break;
-            case "industrial":
-                cost = litersConsumed * 0.90;
-                break;
-            default:
-                System.out.println("Invalid customer type. Defaulting to Regular.");
-                cost = litersConsumed * 0.50;
-        }
-        return cost;
-    }
-
-    public void displayDetails(double cost) {
-        System.out.println("\nWater Usage Summary:\n");
-        System.out.println("Water Consumed: " + df.format(litersConsumed) + " liters");
-        System.out.println("Hours Used: " + hoursUsed + " hours");
-        System.out.println("Usage Efficiency: " + df.format(calculateEfficiency()) + " liters/hour");
-        System.out.println("Total Cost: R" + df.format(cost));
-    }
-}
-
-
-import java.util.Scanner;
-
-public class WaterBillingSystem {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        WaterUsage usage = new WaterUsage();
-
-        System.out.print("Enter Water Consumed (in liters): ");
-        usage.setLitersConsumed(scanner.nextDouble());
-        scanner.nextLine(); // Consume newline
-        System.out.print("Enter Customer Type (Regular/Commercial/Industrial): ");
-        usage.setCustomerType(scanner.nextLine());
-        System.out.print("Enter Hours Used: ");
-        usage.setHoursUsed(scanner.nextDouble());
-
-        double cost = usage.calculateCost();
-        usage.displayDetails(cost);
-    }
-}
-
-
-
-
-
-
+Question 3	
+Discuss at least 2 advantages and 2 disadvantages of using a framework like Three.js for developing your WebVR museum tour experience.
+Advantages:
+When developing VR for a Museum tour experience, webVR would be very ideal because each and every individual can access it on their own device without using any additional hardware.
+We can Including Three.js and its WebVR extensions like THREE.VREffect (for stereo rendering Fullscreen and THREE.VRControls for camera control based on head tracking.
+Disadvantages:
+Since the museum is having some artwork which will require a lot of detailing the web will not be the great choice because It requires a GPU to render all the quality textures and materials.
+Most people at the museum will be have smartphone which are very small to display a place like the museum.
+Advantages:
+• Simplifies 3D scene creation and rendering using WebGL. 
+• Large community and built-in VR/WebXR support make development faster and more accessible. 
+Disadvantages: 
+• May have performance limitations for complex scenes or older mobile devices.
+ • Less control over lower-level rendering optimizations compared to custom WebGL or native tools.
 
 Question 4
+Imagine you're explaining WebVR and its potential to a friend unfamiliar with the concept. Briefly describe how WebVR could revolutionize web browsing experiences.
+If I was to explain WebVR to a friend, I would simply tell him/her that webVR is the future. For example: have you ever visited a website the is woo beautiful that you wanted to interact with it so much not by just clicking a button. WebVR is the perfect match for that, since it allows you to interact with the web in a much better way and experience. The demand for high-quality VR experiences may lead to dedicated VR computing devices in the future.
 
-A. import java.text.DecimalFormat;
-B. private
-C. this.customerType = "residential";
-D. this.litersConsumed
-E. double
-F. return customerType;
-G. return litersConsumed / hoursUsed;
-H. litersConsumed * 0.50
-I. litersConsumed * 0.70
-J. litersConsumed * 0.90
-K. litersConsumed * 0.50
-L. 
-public void displayDetails(double cost) {
-        System.out.println("\nWater Usage Summary:\n");
-        System.out.println("Water Consumed: " + df.format(litersConsumed) + " liters");
-        System.out.println("Hours Used: " + hoursUsed + " hours");
-        System.out.println("Usage Efficiency: " + df.format(calculateEfficiency()) + " liters/hour");
-        System.out.println("Total Cost: R" + df.format(cost));
-    }
+WebVR allows users to experience immersive 3D environments directly in their web browser, turning static web pages into interactive, explorable spaces—like walking through a virtual museum or trying out products in 3D—without installing additional apps.
 
-M. WaterUsage usage = new WaterUsage();
-N. usage.setLitersConsumed(waterConsumed);
-O. usage.setCustomerType(customerType);
-P. usage.setHoursUsed(hoursUsed);
-Q. usage.calculateCost();
-R. usage.displayDetails(cost);
+Question 5		s
+How does Google Cardboard differ from high-end VR headsets in terms of user experience and accessibility?
+The WebVR API allows developers to access VR device capabilities within the browser. the API is distinct from the methods used for Google Cardboard mobile browser apps
+Google Cardboard allows users to transform their existing smartphone into a VR device using a simple, inexpensive headset. It provides basic stereo rendering and utilizes the phone's built-in sensors for motion tracking.
+
+Google Cardboard is a low-cost, smartphone-based headset that provides basic VR experiences. It lacks positional tracking, controllers, and high-end graphics, but is highly accessible and easy to use. In contrast, high-end headsets (like Meta Quest or HTC Vive) offer superior tracking, richer interactivity, and immersive visuals but are expensive and require more powerful hardware.
+
+Question 6		
+Explain the basic principles behind stereo rendering and head tracking used in Google Cardboard.
+The basic principle behind stereo tracking and head tracking is that is that the google Cardboard can turn any smartphone into a VR device even allowing perfect interactions between the user and the device.
+
+Stereo rendering involves generating two slightly different images—one for each eye—to simulate depth perception. Head tracking uses a smartphone’s gyroscope and accelerometer to detect head movement and update the view in real-time, maintaining immersion.
+
+Question 7	
+You've decided to develop your VR museum tour experience using the Unity game engine. Briefly describe how you would leverage the Cardboard SDK for Unity in your development process.
+ 
+I can leverage the Cardboard SDK for unity in my development by making use of the Asset store which has assets that are already supporting VR with specific integrations and making use of the WYSWYG editor to be productive.
+Import the Google Cardboard SDK into Unity, configure the project for Android or iOS, and use the SDK’s prefabs (like VR Camera) and scripts for stereo rendering, input handling (e.g., gaze or tap), and lens distortion correction. The SDK helps simplify integration of smartphone-based VR features into your Unity scenes.
+
+Question 8		
+While brainstorming ideas for your VR museum tour, you consider developing a web-based version using HTML5 and a mobile browser. Explain the potential limitations of this approach compared to using the Unity and Cardboard SDK combination.
+The potential limitations would be that even though unity and cardboard is much better, The HTML runs on desktop and mobile devices and the code can be hosted via the browsers and they may not be as polished as native development systems like Unity.
+
+HTML5-based VR can have performance limitations, reduced graphics fidelity, and inconsistent support across browsers and devices. Unity with Cardboard offers better 3D rendering performance, advanced tools, and more robust VR interaction, but at the cost of requiring app installation.
+
+Question 9	
+Briefly discuss two additional tools or techniques you might consider using to enhance your VR museum tour experience
+The two other additional tools or techniques I would consider would be:
+Game Engines and Frameworks which is a source that allows pre built functionality for 3D graphics which will be very ideal for my museum since it is also having a lot of Graphics to be rendered. Game Engines like Unreal Engine and CryEngine
+ 
+Also using Native software Development kits which allows developers to build applications directly for a particular VR platform like in this case I would go for mobile on my museum tour experience.
+
+360° panoramic images or videos to create immersive environments with minimal performance load. • Spatial audio to provide directional sound cues, improving realism and guiding users' attention.
+
+
+
+
+
+
+ST1
+
+1. Explain how immersive presence plays a role in making the virtual museum tour feel realistic. 
+Answer: 
+Immersive presence refers to the feeling of being physically present in a virtual environment, which is key to making the virtual museum tour feel realistic. By providing a high degree of immersion, users feel like they are actually walking through the museum rather than just observing it. Elements such as realistic 3D models, spatial audio, interactive elements, and responsive controls all contribute to this feeling. The more convincing the visual and sensory cues (like audio or haptic feedback), the stronger the sense of presence, helping users engage more deeply with the experience.
+2. Describe two key differences between desktop VR and mobile VR that would affect how users experience the museum tour. 
+Answer:
+ 1. Hardware Capabilities: Desktop VR typically relies on powerful PCs with advanced graphics cards, offering higher quality visuals and smoother experiences. In contrast, mobile VR is constrained by the processing power of smartphones, which can lead to lower resolution and reduced graphical fidelity, affecting immersion.
+ 2. Interaction Methods: Desktop VR often uses specialized controllers and tracking systems for precise movements and interactions. Mobile VR uses simpler controllers or even relies on the mobile device's sensors (such as touchscreens or head tracking), which can result in less accurate interaction, impacting the user experience.
+3. Your team is debating whether to develop for Oculus Quest 2 or Google Cardboard. Which one would you choose for the museum tour and why? Consider aspects like user experience, affordability, and interaction. 
+Answer: 
+The Oculus Quest 2 would be the preferred choice for the museum tour. It offers a high-quality VR experience with better graphical performance, more precise hand tracking, and a robust controller system. The immersive user experience would be more engaging due to its standalone nature, making it easier to implement interactions like picking up artifacts and hearing descriptions. Although more expensive than Google Cardboard, the Quest 2 provides superior performance and features that justify the investment for a more immersive museum tour. In comparison, Google Cardboard is more affordable but has limited interaction options and lower graphical fidelity, which would detract from the experience.
+
+4. List any two essential software tools needed to build the museum VR experience and briefly explain their purpose. 
+Answer: 
+1. Unity: Unity is a popular game engine used to create the 3D virtual environment of the museum. It allows developers to build, animate, and optimize the virtual museum layout while supporting integration with various VR platforms. 
+2. Blender: Blender is a 3D modeling software that is essential for creating and optimizing 3D models of artifacts and museum elements. It helps with the design, texturing, and animation of assets to be used in the VR environment.
+
+5. Your team is designing the museum layout using a game engine like Unity. What are the two most important 3D coordinate transformations you would need to implement for smooth movement through the virtual museum? 
+Answer: 
+1. Translation (Positioning): Translation allows the user to move smoothly through the virtual museum. It adjusts the position of the user's avatar (or viewpoint) based on input (e.g., controller movement or head tracking). 
+2. Rotation: Rotation adjusts the user’s orientation in the virtual space, allowing them to look around the museum and interact with artifacts. By applying rotations to the camera or user avatar, the user can change their viewing direction fluidly.
+6. How would you optimize 3D models to ensure smooth performance on a mobile VR headset? Provide two techniques. 
+Answer: 
+1. Reduce Polygon Count: Simplifying 3D models by reducing their polygon count minimizes the computational load, which is critical for mobile devices with limited processing power. 
+2. Texture Optimization: Compressing textures and using lower-resolution textures where possible helps improve performance by reducing the memory requirements, ensuring that the VR experience remains smooth on mobile headsets.
+7. In the museum, users should be able to "pick up" and inspect artifacts and hear an audio description of the item. Explain how haptic feedback or audio cues can improve the user experience when interacting with museum artifacts.
+Answer: Haptic feedback and audio cues can enhance immersion by providing additional sensory information that reinforces the experience. Haptic feedback can simulate the feeling of touching or picking up artifacts, making the interaction more tactile and realistic. Audio cues, such as sounds corresponding to the artifact’s weight or the environment around it, can create a more engaging experience. Additionally, when users receive audio descriptions of the artifacts, it helps them connect more deeply with the items and gain more context about their significance.
+
+8. Which type of VR input system (e.g., hand tracking, controllers, gaze-based selection) would be best for this interaction? Justify your choice. 
+Answer: 
+Hand tracking would be the best input system for this interaction. It allows for natural, intuitive interactions, such as reaching out to "pick up" or inspect artifacts. Hand tracking gives users a sense of control and realism, as they can directly interact with objects in the virtual environment without relying on external controllers. This type of input system is particularly well-suited for museum experiences, where users want to examine artifacts closely and engage in detailed actions.
+
+9. After testing, users report motion sickness and lag in the VR museum tour. Identify two possible causes of motion sickness in VR and how they could be mitigated. 
+Answer: 
+1. Frame Rate Drops: Low frame rates can cause motion sickness because they disrupt the fluidity of movement. To mitigate this, the VR environment should be optimized to maintain a consistent high frame rate (ideally 60 FPS or higher). 
+2. Mismatch Between Visual and Physical Movement: When the user’s visual movement doesn’t match their physical movement (e.g., walking or turning in the virtual space), it can lead to nausea. To reduce this, the experience can use techniques such as teleportation or smooth turning, which minimize the dissonance between the user's actions and what they see.
+
+10. What are two performance optimization techniques you would apply to reduce lag and improve frame rates in the VR environment? 
+Answer: 
+1. Level of Detail (LOD) Techniques: Using different levels of detail for objects based on their distance from the camera helps improve performance. Objects farther from the user can be rendered with lower detail, reducing the computational load. 
+2. Culling: Culling involves not rendering objects that are out of the user’s view (e.g., objects behind walls or out of the camera's line of sight), which reduces the number of objects the system needs to process and helps maintain high frame rates.
